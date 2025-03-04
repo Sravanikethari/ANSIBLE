@@ -5,26 +5,27 @@ How It Works:
  2) Useful for quick tasks like checking connectivity, gathering facts, or managing systems on the fly.
 Examples: all the below examples for Ubuntu/Debian systems
  1) Gather system information 
-    cmd- ansible all -m setup
+    cmd- ansible all -a "uname -a"
  2) Install a package (e.g., Apache)
-     cmd- ansible all -m apt -a "name=apache2 state=present"
+     cmd- ansible all -a "sudo apt-get install apache2 -y"  
  3) Start a service (e.g., Apache)
-     cmd- ansible all -m service -a "name=apache2 state=started"
+     cmd- ansible all -a "sudo systemctl start apache2"
  4) Stop a service (e.g., Apache)
-     cmd- ansible all -m service -a "name=apache2 state=stopped"
+     cmd- ansible all -a "sudo systemctl stop apache2"
  5) Create a file
-     cmd- ansible all -m file -a "path=/tmp/testfile state=touch"
+     cmd- ansible all -a "touch /tmp/testfile"
  6) Copy a file
-     cmd- ansible all -m copy -a "src=/path/to/local/file dest=/path/to/remote/file"
+     cmd- ansible all -a "scp /path/to/local/file user@remote:/path/to/remote/file"
  7) Delete a file or directory
-     cmd- ansible all -m file -a "path=/tmp/testfile state=absent"
+     cmd- ansible all -a "rm -f /tmp/testfile"
  8) Add a user
-     cmd- ansible all -m user -a "name=ansible_user state=present"
+     cmd- ansible all -a "sudo useradd ansible_user"
  9) Set up a cron job
-     cmd- ansible all -m cron -a "name='Backup job' minute=0 hour=5 job='/usr/bin/backup.sh' state=present"
+     cmd- ansible all -a "echo '0 5 * * * /usr/bin/backup.sh' | sudo tee -a /etc/crontab"
  10) Check free memory
-     cmd- ansible all -m command -a "free -m"
+     cmd- ansible all -a "free -m"
  11) Change the hostname of a system
-     cmd- ansible all -m hostname -a "name=webserver"
+     cmd- ansible all -a "sudo hostnamectl set-hostname webserver"
  12) Check if a package is installed (for apache)
-     cmd- ansible all -m dpkg_facts
+     cmd- ansible all -a "dpkg -l | grep apache2"
+
