@@ -1,0 +1,30 @@
+This is the simplest way to interact with Ansible. Ad-hoc commands are single-line commands
+
+How It Works:
+ 1) run a single Ansible command to perform an action on your target machines (e.g., install a package, check system status, etc.).
+ 2) Useful for quick tasks like checking connectivity, gathering facts, or managing systems on the fly.
+Examples: all the below examples for Ubuntu/Debian systems
+ 1) Gather system information 
+    cmd- ansible all -m setup
+ 2) Install a package (e.g., Apache)
+     cmd- ansible all -m apt -a "name=apache2 state=present"
+ 3) Start a service (e.g., Apache)
+     cmd- ansible all -m service -a "name=apache2 state=started"
+ 4) Stop a service (e.g., Apache)
+     cmd- ansible all -m service -a "name=apache2 state=stopped"
+ 5) Create a file
+     cmd- ansible all -m file -a "path=/tmp/testfile state=touch"
+ 6) Copy a file
+     cmd- ansible all -m copy -a "src=/path/to/local/file dest=/path/to/remote/file"
+ 7) Delete a file or directory
+     cmd- ansible all -m file -a "path=/tmp/testfile state=absent"
+ 8) Add a user
+     cmd- ansible all -m user -a "name=ansible_user state=present"
+ 9) Set up a cron job
+     cmd- ansible all -m cron -a "name='Backup job' minute=0 hour=5 job='/usr/bin/backup.sh' state=present"
+ 10) Check free memory
+     cmd- ansible all -m command -a "free -m"
+ 11) Change the hostname of a system
+     cmd- ansible all -m hostname -a "name=webserver"
+ 12) Check if a package is installed (for apache)
+     cmd- ansible all -m dpkg_facts
