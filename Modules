@@ -1,0 +1,46 @@
+module is a standalone unit of work that defines a specific action to be executed on a remote machine. Modules are essentially the building blocks of Ansible automation tasks.
+They allow you to automate various system administration tasks, such as managing files, packages, services, users, networks, and cloud resources.
+
+Key Points about Ansible Modules:
+ 1) Functionality: Each module is designed to perform a specific action on the target system. 
+     For example, the copy module copies a file from the local machine to the remote system, while the apt module installs or removes software packages on Debian-based systems.
+
+ 2) Stateless: Modules do not maintain any state between executions. When you run a module, it performs its task and reports the result back to Ansible. 
+     For example, a module might install a package if it isn't already present, or it might modify a configuration file.
+
+ 3) Idempotent: Most Ansible modules are idempotent, which means they will only change the state of a system if necessary. If the system is already in the desired state.
+      For example, a file or package already exists with the correct configuration. 
+
+ 4) Output: Modules return results back to Ansible in the form of JSON. 
+
+ 5) Language-agnostic: While Ansible itself is written in Python, modules can be written in any language, as long as they follow a common interface 
+     (i.e., take arguments from standard input, perform the task, and return output in JSON format).
+
+ 6) Modules Execution: Modules are executed on the remote hosts (also called managed nodes) from the control node (where Ansible is installed).
+      The control node communicates with remote nodes using SSH (for Linux/Unix) or WinRM (for Windows).
+
+Examples: all the below examples for Ubuntu/Debian systems
+ 1) Gather system information 
+    cmd- ansible all -m setup
+ 2) Install a package (e.g., Apache)
+     cmd- ansible all -m apt -a "name=apache2 state=present"
+ 3) Start a service (e.g., Apache)
+     cmd- ansible all -m service -a "name=apache2 state=started"
+ 4) Stop a service (e.g., Apache)
+     cmd- ansible all -m service -a "name=apache2 state=stopped"
+ 5) Create a file
+     cmd- ansible all -m file -a "path=/tmp/testfile state=touch"
+ 6) Copy a file
+     cmd- ansible all -m copy -a "src=/path/to/local/file dest=/path/to/remote/file"
+ 7) Delete a file or directory
+     cmd- ansible all -m file -a "path=/tmp/testfile state=absent"
+ 8) Add a user
+     cmd- ansible all -m user -a "name=ansible_user state=present"
+ 9) Set up a cron job
+     cmd- ansible all -m cron -a "name='Backup job' minute=0 hour=5 job='/usr/bin/backup.sh' state=present"
+ 10) Check free memory
+     cmd- ansible all -m command -a "free -m"
+ 11) Change the hostname of a system
+     cmd- ansible all -m hostname -a "name=webserver"
+ 12) Check if a package is installed (for apache)
+     cmd- ansible all -m dpkg_facts
